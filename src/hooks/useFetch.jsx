@@ -10,12 +10,14 @@ export default function useFetch() {
   //   const searchTerm = "react js";
   const searchID = `11454f98fc92844c5`;
 
-  const getResults = async (query) => {
+  const getResults = async (query, controller) => {
     const BASE_URL = `https://www.googleapis.com/customsearch/v1?key=${API}&q=${query}&num=5&cx=${searchID}`;
     try {
       setError(null);
       setLoading(true);
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(BASE_URL, {
+        signal:controller.signal
+      });
       console.log(response.data.items);
       setResults(response.data.items || []);
     } catch (err) {
