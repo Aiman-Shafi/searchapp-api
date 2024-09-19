@@ -6,9 +6,9 @@ export default function useFetch() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API = `AIzaSyDL3zfCEnc0t9dEb_XKT1Xsvxn6lm_U6hU`;
+  const API = import.meta.env.VITE_API_KEY;
   //   const searchTerm = "react js";
-  const searchID = `11454f98fc92844c5`;
+  const searchID = import.meta.env.VITE_SEARCH_ID;
 
   const getResults = async (query, start = 1) => {
     const BASE_URL = `https://www.googleapis.com/customsearch/v1?key=${API}&q=${query}&num=5&cx=${searchID}`;
