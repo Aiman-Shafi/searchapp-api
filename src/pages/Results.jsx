@@ -1,17 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useLocation } from "react-router";
 import SearchBar from "../components/SearchBar";
 
 export default function Results() {
   const location = useLocation();
-  console.log(location);
   const query = new URLSearchParams(location.search).get("query");
+  const [isLoading, setIsLoading] = useState(false); // for load more data
+  const [startIndex, setStartIndex] = useState(1);
   const [results, loading, error, getResults] = useFetch();
+  const loadMoreRef = useRef(null);
 
   useEffect(() => {
-    getResults(query);
-  }, []);
+    getResults(query, startIndex);
+    setIsLoading(false);
+    return () => {
+      console.log("api is cleaned up...");
+    };
+  }, [query, startIndex]);
+
+  const loadMoreResults = () => {
+    setIsLoading(true);
+    setStartIndex((index) => index + 10);
+  };
+
+  useEffect(() => {
+    if (!loading && loadMoreRef.current) {
+      loadMoreRef.current.scrollIntoView({ behavior: "smooth" });
+      setIsLoading(false);
+    }
+  }, [loading]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -38,6 +56,14 @@ export default function Results() {
             </div>
           ))}
         </div>
+      )}
+      <div ref={loadMoreRef}></div>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        <button className="btn" onClick={loadMoreResults}>
+          Load More
+        </button>
       )}
     </div>
   );

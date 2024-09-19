@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
+import { CiSun } from "react-icons/ci";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { useContext } from "react";
+import { DarkModeContext } from "../Context/DarkMode";
 
 export default function Header() {
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+  // const toggleDarkMode = () => {
+  //   setDarkMode(!darkMode);
+  // };
+  console.log(darkMode);
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -51,7 +60,17 @@ export default function Header() {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <a className="btn text-sm" onClick={toggleDarkMode}>
+            {darkMode ? (
+              <span className="flex gap-2">
+                <CiSun className="text-xl" /> Light
+              </span>
+            ) : (
+              <span className="flex gap-2">
+                <MdOutlineDarkMode className="text-xl" /> Dark
+              </span>
+            )}
+          </a>
         </div>
       </div>
     </div>

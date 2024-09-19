@@ -28,7 +28,7 @@ export default function SearchBar({ defaultQuery }) {
         {showImage && (
           <img src={serachMe} alt="search me icon" className="w-[300px]" />
         )}
-        <h2 className="text-white font-semibold text-3xl py-5">
+        <h2 className=" font-semibold text-3xl py-5 text-blue-800 dark:text-white">
           Are you looking for something?
         </h2>
       </div>
